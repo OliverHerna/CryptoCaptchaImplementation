@@ -3,8 +3,10 @@ session_start();
 $_SESSION['count'] = time();
 $image;
 ?>
+<html>
 <head>
 <link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <title>PROYECTO CAPTCHA</title>
 <body>
@@ -24,7 +26,7 @@ if ($flag == 1) {
             <h1>El CAPTCHA es Correcto!!!</h1>
 
             <form action=" <?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                <input type="Enviar" value="Refrescar Pagina   ">
+                <input type="submit" value="Refrescar la pagina" class="btn btn-primary" style="background-color:#e088f9;">
             </form>
         </div>
 
@@ -34,12 +36,15 @@ if ($flag == 1) {
         ?>
 
         <div style="text-align:center;">
-            <h1>El Captcha no es correcto!!!<br>Intentalo de nuevo </h1>
+            <h1>El CAPTCHA no es Correcto!!!</h1>
+
+            <form action=" <?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <input type="submit" value="Refrescar la pagina" class="btn btn-primary" style="background-color:#e088f9;">
+            </form>
         </div>
 
         <?php
-        create_image();
-        display();
+        
     }
 } else {
     create_image();
@@ -50,24 +55,32 @@ function display()
 {
     ?>
 
-    <div style="text-align:center;">
-        <h3>Escribe el texto que vez en la imagen (CAPTCHA)</h3>
-        <b>Este es un Test para verificar que no eres un Robot</b>
+<div class="card mt-5" style="max-width:500px;margin:auto;">
+    <div class="card-body text-center" >
 
-        <div style="display:block;margin-bottom:20px;margin-top:20px;">
-            <img src="image<?php echo $_SESSION['count'] ?>.png">
+        <div style="text-align:center;">
+            <h3 class="h3 mb-3">Escribe el texto que vez en la imagen (CAPTCHA)</h3>
+            <b class="mb-3">Este es un Test para verificar que no eres un Robot</b>
+
+            <div style="display:block;margin-bottom:20px;margin-top:20px;">
+                <img src="image<?php echo $_SESSION['count'] ?>.png">
+            </div>
+            <form action=" <?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+            <input type="text" name="input"  class="form-control"/>
+            <input type="hidden" name="flag" value="1"/>
+            <br>
+            <div class="seccion-enviar1 d-flex align-items-center justify-content-center mt-3 mb-3">
+            <input type="submit" value="Enviar" name="submit" class="btn btn-primary" style="background-color:#e088f9;"/>
+            </div>
+            </form>
+
+            <form action=" <?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <input type="submit" value="Refrescar la pagina" class="btn btn-primary" style="background-color:#e088f9;">
+            </form>
         </div>
-        <form action=" <?php echo $_SERVER['PHP_SELF']; ?>" method="POST"
-        / >
-        <input type="text" name="input"/>
-        <input type="hidden" name="flag" value="1"/>
-        <input type="submit" value="submit" name="submit"/>
-        </form>
 
-        <form action=" <?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-            <input type="submit" value="Refrescar la pagina">
-        </form>
     </div>
+</div>
 
 <?php
 }
@@ -101,7 +114,7 @@ function  create_image()
     $word = "";
     for ($i = 0; $i < 6; $i++) {
         $letter = $letters[rand(0, $len - 1)];
-        imagestring($image, 7, 5 + ($i * 30), 20, $letter, $text_color);
+        imagestring($image, 500, 5 + ($i * 30), 20, $letter, $text_color);
         $word .= $letter;
     }
     $_SESSION['captcha_string'] = $word;
@@ -117,3 +130,4 @@ function  create_image()
 ?>
 
 </body>
+</html>
