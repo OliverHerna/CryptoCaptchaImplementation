@@ -3,9 +3,11 @@ session_start();
 $_SESSION['count'] = time();
 $image;
 ?>
-
-<title>demo.php</title>
-<body style="background-color:#ddd; ">
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+<title>PROYECTO CAPTCHA</title>
+<body>
 
 <?php
 $flag = 5;
@@ -19,10 +21,10 @@ if ($flag == 1) {
         ?>
 
         <div style="text-align:center;">
-            <h1>Your answer is correct!</h1>
+            <h1>El CAPTCHA es Correcto!!!</h1>
 
             <form action=" <?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                <input type="submit" value="refresh the page">
+                <input type="Enviar" value="Refrescar Pagina   ">
             </form>
         </div>
 
@@ -32,7 +34,7 @@ if ($flag == 1) {
         ?>
 
         <div style="text-align:center;">
-            <h1>Your answer is incorrect!<br>please try again </h1>
+            <h1>El Captcha no es correcto!!!<br>Intentalo de nuevo </h1>
         </div>
 
         <?php
@@ -49,8 +51,8 @@ function display()
     ?>
 
     <div style="text-align:center;">
-        <h3>TYPE THE TEXT YOU SEE IN THE IMAGE</h3>
-        <b>This is just to check if you are a robot</b>
+        <h3>Escribe el texto que vez en la imagen (CAPTCHA)</h3>
+        <b>Este es un Test para verificar que no eres un Robot</b>
 
         <div style="display:block;margin-bottom:20px;margin-top:20px;">
             <img src="image<?php echo $_SESSION['count'] ?>.png">
@@ -63,7 +65,7 @@ function display()
         </form>
 
         <form action=" <?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-            <input type="submit" value="refresh the page">
+            <input type="submit" value="Refrescar la pagina">
         </form>
     </div>
 
@@ -75,14 +77,14 @@ function  create_image()
     global $image;
     $image = imagecreatetruecolor(200, 50) or die("Cannot Initialize new GD image stream");
 
-    $background_color = imagecolorallocate($image, 255, 255, 255);
+    $background_color = imagecolorallocate($image, 224, 136, 249);
     $text_color = imagecolorallocate($image, 0, 255, 255);
-    $line_color = imagecolorallocate($image, 64, 64, 64);
+    $line_color = imagecolorallocate($image, 255, 255, 255);
     $pixel_color = imagecolorallocate($image, 0, 0, 255);
 
     imagefilledrectangle($image, 0, 0, 200, 50, $background_color);
 
-    for ($i = 0; $i < 3; $i++) {
+    for ($i = 0; $i < rand()%100; $i++) {
         imageline($image, 0, rand() % 50, 200, rand() % 50, $line_color);
     }
 
@@ -91,7 +93,7 @@ function  create_image()
     }
 
 
-    $letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    $letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     $len = strlen($letters);
     $letter = $letters[rand(0, $len - 1)];
 
@@ -113,4 +115,5 @@ function  create_image()
 }
 
 ?>
+
 </body>
