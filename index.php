@@ -108,12 +108,12 @@ function  create_image()
 
     $letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     $len = strlen($letters);
-    $letter = $letters[rand(0, $len - 1)];
+    $letter = $letters[random_int(0, $len - 1)];
 
     $text_color = imagecolorallocate($image, 0, 0, 0);
     $word = "";
     for ($i = 0; $i < 6; $i++) {
-        $letter = $letters[rand(0, $len - 1)];
+        $letter = $letters[random_int(0, $len - 1)];
         imagestring($image, 500, 5 + ($i * 30), 20, $letter, $text_color);
         $word .= $letter;
     }
